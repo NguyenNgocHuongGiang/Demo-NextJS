@@ -1,9 +1,10 @@
 import { searchProduct } from "@/server/actions/productApi";
+import { Shoe } from "@/types/shoe";
 import Image from "next/image";
 import Link from "next/link";
 import React from "react";
 
-export default async function ({ searchParams }: any) {
+export default async function SearchPage({ searchParams }: any) {
   const { keyword } = searchParams;
   const data: Shoe[] = await searchProduct(keyword);
   return (

@@ -1,4 +1,5 @@
 import { fetchShoes } from "@/server/actions/productApi";
+import { Shoe } from "@/types/shoe";
 import Image from "next/image";
 import Link from "next/link";
 import React from "react";

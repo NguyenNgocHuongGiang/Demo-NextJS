@@ -1,4 +1,4 @@
-type Shoe = {
+export type Shoe = {
   id: number;
   name: string;
   alias: string;
