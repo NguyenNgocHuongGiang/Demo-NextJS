@@ -1,30 +1,14 @@
-"use client";
-
+import { searchProduct } from "@/server/actions/productApi";
 import Image from "next/image";
 import Link from "next/link";
-import { useEffect, useState } from "react";
+import React from "react";
 
-
-export default function Home() {
-  const [shoes, setShoes] = useState<Shoe[]>([]);
-
-  const fetchShoes = async () => {
-    try {
-      const response = await fetch("https://apistore.cybersoft.edu.vn/api/Product");
-      const data = await response.json();
-      setShoes(data.content.slice(0, 18));
-    } catch (error) {
-      console.error("Error fetching shoes:", error);
-    }
-  };
-
-  useEffect(() => {
-    fetchShoes();
-  }, []);
-
+export default async function ({ searchParams }: any) {
+  const { keyword } = searchParams;
+  const data: Shoe[] = await searchProduct(keyword);
   return (
     <div className="px-11 py-5 grid grid-cols-1 gap-6 sm:grid-cols-3 lg:grid-cols-4">
-      {shoes.map((shoe) => (
+      {data.map((shoe) => (
         <div key={shoe.id}>
           <div className="max-w-sm bg-white border border-gray-200 rounded-lg shadow-sm dark:bg-gray-800 dark:border-gray-700">
             <a href="#">

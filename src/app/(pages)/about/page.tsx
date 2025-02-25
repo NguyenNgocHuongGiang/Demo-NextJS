@@ -1,30 +1,59 @@
-"use client";
-
+import { fetchShoes } from "@/server/actions/productApi";
 import Image from "next/image";
 import Link from "next/link";
-import { useEffect, useState } from "react";
+import React from "react";
+
+export const metadata = {
+  title: "Shoes Store",
+  description:
+    "Explore our wide range of shoes with the best prices and quality.",
+  openGraph: {
+    title: "Shoes Store",
+    description:
+      "Explore our wide range of shoes with the best prices and quality.",
+    url: "https://shoesshopbc70.vercel.app",
+    images: [
+      {
+        url: "https://apistore.cybersoft.edu.vn/images/van-old-school.png",
+        width: 800,
+        height: 600,
+        alt: "Shoes App",
+      },
+    ],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Shoes App - Home",
+    description:
+      "Explore our wide range of shoes with the best prices and quality.",
+    images: ["https://apistore.cybersoft.edu.vn/images/van-old-school.png"],
+  },
+  jsonLd: {
+    "@context": "https://schema.org",
+    "@type": "Store",
+    name: "Shoes App",
+    url: "https://yourwebsite.com",
+    description:
+      "Explore our wide range of shoes with the best prices and quality.",
+    image: "https://yourwebsite.com/images/og-image.jpg",
+    potentialAction: {
+      "@type": "SearchAction",
+      target: "https://yourwebsite.com/search?q={search_term_string}",
+      "query-input": "required name=search_term_string",
+    },
+  },
+};
 
 
-export default function Home() {
-  const [shoes, setShoes] = useState<Shoe[]>([]);
+export default async function About() {
+  
 
-  const fetchShoes = async () => {
-    try {
-      const response = await fetch("https://apistore.cybersoft.edu.vn/api/Product");
-      const data = await response.json();
-      setShoes(data.content.slice(0, 18));
-    } catch (error) {
-      console.error("Error fetching shoes:", error);
-    }
-  };
-
-  useEffect(() => {
-    fetchShoes();
-  }, []);
+  const data = await fetchShoes();
+  console.log(data);
 
   return (
     <div className="px-11 py-5 grid grid-cols-1 gap-6 sm:grid-cols-3 lg:grid-cols-4">
-      {shoes.map((shoe) => (
+      {data.map((shoe: Shoe) => (
         <div key={shoe.id}>
           <div className="max-w-sm bg-white border border-gray-200 rounded-lg shadow-sm dark:bg-gray-800 dark:border-gray-700">
             <a href="#">
@@ -46,7 +75,7 @@ export default function Home() {
                 {shoe.shortDescription}
               </p>
               <Link
-                href={`/detail/${shoe.id}`}
+                href="#"
                 className="inline-flex items-center px-3 py-2 text-sm font-medium text-center text-white bg-blue-700 rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
               >
                 View detail
